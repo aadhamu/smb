@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | SMB Designs</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap');
+        
+        /* Keyframes for animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideInDown {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes slideInUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        /* Smooth scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Body styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            color: #000;
+            background: #fff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Header styles with improved transitions */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 30px rgba(0,0,0,0.08);
+            z-index: 1000;
+            padding: 15px 0;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            backdrop-filter: blur(10px);
+        }
+        
+        .header-scrolled {
+            padding: 10px 0;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            background: rgba(255, 255, 255, 0.98);
+        }
+        
+        /* Navigation container */
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Logo styles */
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .logo span {
+            color: #E2CA76;
+        }
+        
+        /* Navigation links */
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #000;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: #E2CA76;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #E2CA76;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        /* Mobile menu button */
+        .mobile-menu-btn {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 1001;
+            transition: transform 0.3s ease;
+        }
+        
+        .mobile-menu-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        /* Mobile menu overlay */
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(226, 202, 118, 0.98);
+            z-index: 999;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        
+        .mobile-menu-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+        
+        .mobile-menu-overlay nav {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .mobile-menu-overlay a {
+            text-decoration: none;
+            color: #000;
+            font-size: 1.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .mobile-menu-overlay a:hover {
+            color: #fff;
+            transform: translateX(10px) translateY(0);
+        }
+        
+        /* About Hero */
+        .about-hero {
+            height: 60vh;
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./images/about.jpg') center/cover;
+            display: flex;
+            align-items: center;
+            margin-top: 60px;
+            position: relative;
+        }
+        
+        .about-hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .about-hero h1 {
+            font-size: 3.5rem;
+            color: #fff;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 20px;
+        }
+        
+        /* About Content */
+        .about-content {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+        
+        .about-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 50px;
+            margin-bottom: 80px;
+            align-items: center;
+        }
+        
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .about-image {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .about-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.5s ease;
+        }
+        
+        .about-image:hover img {
+            transform: scale(1.02);
+        }
+        
+        .about-section h2 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            color: #E2CA76;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .about-section p {
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+        
+        /* Artisans Section */
+        .artisans-section {
+            text-align: center;
+            margin: 80px 0;
+        }
+        
+        .artisans-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .artisans-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .artisan-card {
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .artisan-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .artisan-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 15px;
+            border: 3px solid #E2CA76;
+            transition: all 0.3s ease;
+        }
+        
+        .artisan-card:hover .artisan-image {
+            border-color: #000;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .artisan-card h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.3rem;
+        }
+        
+        .artisan-card .position {
+            color: #E2CA76;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+        
+        /* Craftsmanship Video */
+        .craftsmanship-video {
+            background: #f9f9f9;
+            padding: 80px 20px;
+            text-align: center;
+        }
+        
+        .video-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .craftsmanship-video h2 {
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 5px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* Footer */
+        footer {
+            background: #000;
+            color: #fff;
+            padding: 50px 20px;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+        
+        .footer-logo h3 {
+            color: #E2CA76;
+            margin-bottom: 20px;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .footer-logo span {
+            color: #E2CA76;
+        }
+        
+        .footer-logo p {
+            margin-bottom: 20px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            color: #fff;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: #E2CA76;
+            transform: translateY(-3px);
+        }
+        
+        .footer-column h4 {
+            margin-bottom: 15px;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .footer-links li {
+            margin-bottom: 8px;
+        }
+        
+        .footer-links a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: #E2CA76;
+        }
+        
+        .contact-info p {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .contact-info i {
+            color: #E2CA76;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+        }
+        
+        /* Animation classes */
+        .animate-fade {
+            animation: fadeIn 1s ease forwards;
+        }
+        
+        .animate-slide-down {
+            animation: slideInDown 0.8s ease forwards;
+        }
+        
+        .animate-slide-up {
+            animation: slideInUp 0.8s ease forwards;
+        }
+        
+        .animate-delay-1 {
+            animation-delay: 0.2s;
+        }
+        
+        .animate-delay-2 {
+            animation-delay: 0.4s;
+        }
+        
+        .animate-delay-3 {
+            animation-delay: 0.6s;
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 992px) {
+            .about-hero h1 {
+                font-size: 3rem;
+            }
+            
+            .about-section h2 {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .about-hero {
+                height: 50vh;
+                margin-top: 60px;
+            }
+            
+            .about-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .about-section {
+                flex-direction: column;
+            }
+            
+            .about-text, .about-image {
+                min-width: 100%;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .about-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .artisans-section h2, .craftsmanship-video h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <header id="main-header">
+        <div class="nav-container">
+            <div class="logo animate-slide-down">
+                <span>SMB</span> Designs
+            </div>
+            <nav class="nav-links">
+                <a href="index.html" class="animate-slide-down animate-delay-1">Home</a>
+                <a href="about.html" class="animate-slide-down animate-delay-2">About</a>
+                <a href="shop.html" class="animate-slide-down animate-delay-3">Shop</a>
+                <a href="contact.html" class="animate-slide-down animate-delay-1">Contact</a>
+                <a href="#" class="animate-slide-down animate-delay-2"><i class="fas fa-shopping-bag"></i></a>
+            </nav>
+            <div class="mobile-menu-btn animate-slide-down animate-delay-3">
+                <i class="fas fa-bars" id="menu-icon"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobile-menu">
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="shop.html">Shop</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+        <div style="margin-top: 50px; display: flex; gap: 20px;">
+            <a href="#"><i class="fas fa-shopping-bag"></i></a>
+        </div>
+    </div>
+
+    <!-- About Hero -->
+    <section class="about-hero">
+        <div class="about-hero-content">
+            <h1 class="animate__animated animate__fadeInDown">Our Story</h1>
+        </div>
+    </section>
+
+    <!-- About Content -->
+    <section class="about-content">
+        <div class="about-section">
+            <div class="about-text animate-slide-up">
+                <h2>The Beginning</h2>
+                <p>Founded in (establishment year), SMB Designs began as a humble creative studio with a focus on quality, detail, and timeless design. What started as a simple idea soon evolved into a respected name in the world of premium craftsmanship.</p>
+                <p>From our first collection of handcrafted items to our modern range of offerings, our commitment to excellence remains unchanged. Every product we create reflects our passion for design and dedication to perfection.</p>
+
+            </div>
+            <div class="about-image animate-slide-up animate-delay-1">
+                <img src="./images/sign3.jpg" alt="Workshop">
+            </div>
+        </div>
+
+        <div class="about-section">
+            <div class="about-image animate-slide-up">
+                <img src="./images/sign2.jpg" alt="Materials">
+            </div>
+            <div class="about-text animate-slide-up animate-delay-1">
+                <h2>Our Materials</h2>
+                <p>At SMB Designs, we take pride in using only the finest locally sourced materials. Based in Kaduna, Nigeria, all of our products are carefully crafted in-house by skilled artisans dedicated to quality and detail.</p>
+                <p>From material selection to the final stitch, every step is handled with care. We believe that great design starts with great materials and even greater craftsmanship.</p>
+            </div>
+        </div>
+
+        <div class="artisans-section">
+            <h2 class="animate-slide-down">Meet Our Artisans</h2>
+            <div class="artisans-grid">
+                <div class="artisan-card animate-fade">
+                    <img src="./images/artisan.jpg" alt="Artisan" class="artisan-image">
+                    <h3>Artisan name</h3>
+                    <p class="position">Master Shoemaker</p>
+                    <p>25 years of experience in traditional Italian shoemaking</p>
+                </div>
+                <div class="artisan-card animate-fade animate-delay-1">
+                    <img src="./images/artisan.jpg" alt="Artisan" class="artisan-image">
+                    <h3>Artisan name</h3>
+                    <p class="position">Design Director</p>
+                    <p>Combines modern aesthetics with timeless elegance</p>
+                </div>
+                <div class="artisan-card animate-fade animate-delay-2">
+                    <img src="./images/artisan.jpg" alt="Artisan" class="artisan-image">
+                    <h3>Artisan name</h3>
+                    <p class="position">Leather Specialist</p>
+                    <p>Expert in selecting and treating premium leathers</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Craftsmanship Video -->
+    <section class="craftsmanship-video">
+        <div class="video-container">
+            <h2 class="animate-slide-down">The Art of Shoemaking</h2>
+            <div class="video-wrapper animate-slide-up">
+                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-logo">
+                <h3><span>SMB</span> Designs</h3>
+                <p>Luxury handcrafted footwear since (established date)</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-pinterest"></i></a>
+                </div>
+            </div>
+            <div>
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Customer Service</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Shipping Policy</a></li>
+                    <li><a href="#">Returns & Exchanges</a></li>
+                    <li><a href="#">Size Guide</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Contact</h4>
+                <div class="contact-info">
+                    <p><i class="fas fa-map-marker-alt"></i>No 1 Golf Course road opposite ear-care center, unguwan rimi, Kaduna.</p>
+                    <p><i class="fas fa-phone"></i> 07066648757</p>
+                    <p><i class="fas fa-envelope"></i> info@smbdesigns.com</p>
+                    <p><i class="fab fa-whatsapp"></i> +234 7066648757</p>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 SMB Designs. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle with animation
+        const menuBtn = document.querySelector('.mobile-menu-btn');
+        const menuIcon = document.getElementById('menu-icon');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navLinks = document.querySelectorAll('.mobile-menu-overlay a');
+        
+        let menuOpen = false;
+        
+        menuBtn.addEventListener('click', function() {
+            if(!menuOpen) {
+                mobileMenu.classList.add('active');
+                menuIcon.className = 'fas fa-times';
+                document.body.style.overflow = 'hidden';
+                menuOpen = true;
+                
+                // Animate each nav link
+                navLinks.forEach((link, index) => {
+                    link.style.animation = `fadeInUp 0.5s ease forwards ${index * 0.1 + 0.3}s`;
+                });
+            } else {
+                mobileMenu.classList.remove('active');
+                menuIcon.className = 'fas fa-bars';
+                document.body.style.overflow = 'auto';
+                menuOpen = false;
+                
+                // Reset animations
+                navLinks.forEach(link => {
+                    link.style.animation = 'none';
+                });
+            }
+        });
+        
+        // Close menu when clicking on a link
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                mobileMenu.classList.remove('active');
+                menuIcon.className = 'fas fa-bars';
+                document.body.style.overflow = 'auto';
+                menuOpen = false;
+            });
+        });
+        
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('main-header');
+            if (window.scrollY > 50) {
+                header.classList.add('header-scrolled');
+            } else {
+                header.classList.remove('header-scrolled');
+            }
+        });
+        
+        // Scroll animation for elements
+        const animateOnScroll = () => {
+            const elements = document.querySelectorAll('.about-text, .about-image, .artisan-card, .video-wrapper');
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (elementPosition < windowHeight - 100) {
+                    element.classList.add('animate-fade');
+                }
+            });
+        };
+        
+        // Initial check on load
+        window.addEventListener('load', animateOnScroll);
+        
+        // Check on scroll
+        window.addEventListener('scroll', animateOnScroll);
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

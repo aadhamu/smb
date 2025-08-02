@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Milano | SMB Designs</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap');
+        
+        /* Keyframes for animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideInDown {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes slideInUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        /* Smooth scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Body styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            color: #000;
+            background: #fff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Header styles with improved transitions */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 30px rgba(0,0,0,0.08);
+            z-index: 1000;
+            padding: 15px 0;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            backdrop-filter: blur(10px);
+        }
+        
+        .header-scrolled {
+            padding: 10px 0;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            background: rgba(255, 255, 255, 0.98);
+        }
+        
+        /* Navigation container */
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Logo styles */
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .logo span {
+            color: #E2CA76;
+        }
+        
+        /* Navigation links */
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #000;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: #E2CA76;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #E2CA76;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        /* Mobile menu button */
+        .mobile-menu-btn {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 1001;
+            transition: transform 0.3s ease;
+        }
+        
+        .mobile-menu-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        /* Mobile menu overlay */
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(226, 202, 118, 0.98);
+            z-index: 999;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        
+        .mobile-menu-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+        
+        .mobile-menu-overlay nav {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .mobile-menu-overlay a {
+            text-decoration: none;
+            color: #000;
+            font-size: 1.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .mobile-menu-overlay a:hover {
+            color: #fff;
+            transform: translateX(10px) translateY(0);
+        }
+        
+        /* Product Detail */
+        .product-detail {
+            max-width: 1200px;
+            margin: 80px auto 50px;
+            padding: 0 20px;
+        }
+        
+        .product-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 50px;
+        }
+        
+        /* Product Images */
+        .product-images {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .main-image {
+            margin-bottom: 15px;
+            overflow: hidden;
+            border-radius: 5px;
+            position: relative;
+        }
+        
+        .main-image img {
+            width: 100%;
+            height: auto;
+            transition: transform 0.5s ease;
+        }
+        
+        .main-image:hover img {
+            transform: scale(1.02);
+        }
+        
+        .thumbnail-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        
+        .thumbnail {
+            width: 100%;
+            height: auto;
+            border: 1px solid #eee;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .thumbnail:hover {
+            border-color: #E2CA76;
+            transform: translateY(-3px);
+        }
+        
+        /* Product Info */
+        .product-info {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .product-header {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .product-title {
+            font-size: 2.2rem;
+            margin: 0 0 10px 0;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .product-rating {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .stars {
+            color: #E2CA76;
+            margin-right: 15px;
+        }
+        
+        .review-link {
+            color: #666;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .review-link:hover {
+            color: #E2CA76;
+        }
+        
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #000;
+        }
+        
+        .product-description {
+            margin-bottom: 30px;
+            color: #666;
+            line-height: 1.8;
+        }
+        
+        /* Product Options */
+        .option-group {
+            margin-bottom: 25px;
+        }
+        
+        .option-title {
+            margin-bottom: 15px;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+        
+        .color-options {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .color-option {
+            position: relative;
+        }
+        
+        .color-radio {
+            position: absolute;
+            opacity: 0;
+        }
+        
+        .color-swatch {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .color-radio:checked + .color-swatch {
+            border-color: #E2CA76;
+            transform: scale(1.1);
+        }
+        
+        .size-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .size-option {
+            position: relative;
+        }
+        
+        .size-radio {
+            position: absolute;
+            opacity: 0;
+        }
+        
+        .size-box {
+            width: 50px;
+            height: 50px;
+            border: 1px solid #ddd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .size-radio:checked + .size-box {
+            border-color: #000;
+            background: #f9f9f9;
+            font-weight: 600;
+        }
+        
+        .size-box:hover {
+            border-color: #E2CA76;
+        }
+        
+        /* Quantity Selector */
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+        }
+        
+        .quantity-btn {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #ddd;
+            background: #f9f9f9;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .quantity-btn:hover {
+            background: #eee;
+        }
+        
+        .quantity-input {
+            width: 60px;
+            height: 40px;
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+            border-left: none;
+            border-right: none;
+            text-align: center;
+            -moz-appearance: textfield;
+        }
+        
+        .quantity-input::-webkit-outer-spin-button,
+        .quantity-input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .action-btn {
+            padding: 15px 30px;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+            flex: 1;
+            min-width: 200px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            border-radius: 30px;
+        }
+        
+        .cart-btn {
+            background: #000;
+            color: #fff;
+        }
+        
+        .cart-btn:hover {
+            background: #333;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .whatsapp-btn {
+            background: #E2CA76;
+            color: #000;
+        }
+        
+        .whatsapp-btn:hover {
+            background: #d4b95a;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        /* Product Details */
+        .product-details {
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+        
+        .details-title {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+        
+        .details-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .detail-item {
+            margin-bottom: 8px;
+            display: flex;
+        }
+        
+        .detail-label {
+            font-weight: 500;
+            min-width: 120px;
+        }
+        
+        /* Product Tabs */
+        .product-tabs {
+            margin: 50px 0;
+        }
+        
+        .tab-buttons {
+            display: flex;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 30px;
+        }
+        
+        .tab-btn {
+            padding: 15px 25px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .tab-btn::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #E2CA76;
+            transition: width 0.3s ease;
+        }
+        
+        .tab-btn.active::after {
+            width: 100%;
+        }
+        
+        .tab-btn:hover {
+            color: #E2CA76;
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .tab-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .tab-content p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+        
+        /* Reviews */
+        .review {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #f5f5f5;
+        }
+        
+        .review-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .review-author {
+            font-weight: 600;
+        }
+        
+        .review-date {
+            color: #999;
+            margin-left: 15px;
+        }
+        
+        .review-title {
+            margin: 0 0 10px 0;
+            font-size: 1.1rem;
+        }
+        
+        .review-btn {
+            padding: 12px 30px;
+            background: #000;
+            color: #fff;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 30px;
+        }
+        
+        .review-btn:hover {
+            background: #333;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        /* Related Products */
+        .related-products {
+            margin: 80px 0;
+        }
+        
+        .related-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 40px;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .related-card {
+            border: 1px solid #eee;
+            padding: 20px;
+            transition: all 0.3s ease;
+            border-radius: 5px;
+        }
+        
+        .related-card:hover {
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transform: translateY(-5px);
+        }
+        
+        .related-image {
+            position: relative;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+        
+        .related-image img {
+            width: 100%;
+            height: auto;
+            transition: transform 0.5s ease;
+        }
+        
+        .related-card:hover .related-image img {
+            transform: scale(1.05);
+        }
+        
+        .related-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #E2CA76;
+            color: #000;
+            padding: 5px 10px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border-radius: 3px;
+        }
+        
+        .related-info h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.2rem;
+        }
+        
+        .related-info p {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+        
+        .related-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .related-price {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        
+        .related-link {
+            text-decoration: none;
+            color: #000;
+            border: 1px solid #000;
+            padding: 5px 15px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            border-radius: 3px;
+        }
+        
+        .related-link:hover {
+            background: #E2CA76;
+            border-color: #E2CA76;
+            color: #000;
+        }
+        
+        /* Footer */
+        footer {
+            background: #000;
+            color: #fff;
+            padding: 50px 20px;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+        
+        .footer-logo h3 {
+            color: #E2CA76;
+            margin-bottom: 20px;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .footer-logo span {
+            color: #E2CA76;
+        }
+        
+        .footer-logo p {
+            margin-bottom: 20px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            color: #fff;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: #E2CA76;
+            transform: translateY(-3px);
+        }
+        
+        .footer-column h4 {
+            margin-bottom: 15px;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .footer-links li {
+            margin-bottom: 8px;
+        }
+        
+        .footer-links a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: #E2CA76;
+        }
+        
+        .contact-info p {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .contact-info i {
+            color: #E2CA76;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+        }
+        
+        /* Animation classes */
+        .animate-fade {
+            animation: fadeIn 1s ease forwards;
+        }
+        
+        .animate-slide-down {
+            animation: slideInDown 0.8s ease forwards;
+        }
+        
+        .animate-slide-up {
+            animation: slideInUp 0.8s ease forwards;
+        }
+        
+        .animate-delay-1 {
+            animation-delay: 0.2s;
+        }
+        
+        .animate-delay-2 {
+            animation-delay: 0.4s;
+        }
+        
+        .animate-delay-3 {
+            animation-delay: 0.6s;
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 992px) {
+            .product-title {
+                font-size: 2rem;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .action-btn {
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .product-container {
+                flex-direction: column;
+            }
+            
+            .thumbnail-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .tab-buttons {
+                overflow-x: auto;
+                white-space: nowrap;
+                padding-bottom: 5px;
+            }
+            
+            .tab-btn {
+                padding: 15px 20px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .product-title {
+                font-size: 1.8rem;
+            }
+            
+            .thumbnail-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .size-options {
+                justify-content: center;
+            }
+            
+            .related-title {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <header id="main-header">
+        <div class="nav-container">
+            <div class="logo animate-slide-down">
+                <span>SMB</span> Designs
+            </div>
+            <nav class="nav-links">
+                <a href="index.html" class="animate-slide-down animate-delay-1">Home</a>
+                <a href="about.html" class="animate-slide-down animate-delay-2">About</a>
+                <a href="shop.html" class="animate-slide-down animate-delay-3">Shop</a>
+                <a href="contact.html" class="animate-slide-down animate-delay-1">Contact</a>
+                <a href="#" class="animate-slide-down animate-delay-2"><i class="fas fa-shopping-bag"></i></a>
+            </nav>
+            <div class="mobile-menu-btn animate-slide-down animate-delay-3">
+                <i class="fas fa-bars" id="menu-icon"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobile-menu">
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="shop.html">Shop</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+        <div style="margin-top: 50px; display: flex; gap: 20px;">
+            <a href="#"><i class="fas fa-shopping-bag"></i></a>
+        </div>
+    </div>
+
+    <!-- Product Detail -->
+    <section class="product-detail">
+        <div class="product-container">
+            <!-- Product Images -->
+            <div class="product-images animate-slide-up">
+                <div class="main-image">
+                    <img src="./images/sign1.jpg" alt="The Milano">
+                </div>
+                <div class="thumbnail-grid">
+                    <img src="./images/sign2.jpg" alt="Thumbnail 1" class="thumbnail">
+                    <img src="./images/home.jpg" alt="Thumbnail 2" class="thumbnail">
+                    <!-- <img src="https://images.unsplash.com/photo-1600269452121-4f2416e55c28?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" alt="Thumbnail 3" class="thumbnail">
+                    <img src="https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" alt="Thumbnail 4" class="thumbnail"> -->
+                </div>
+            </div>
+            
+            <!-- Product Info -->
+            <div class="product-info animate-slide-up animate-delay-1">
+                <div class="product-header">
+                    <h1 class="product-title">Product name</h1>
+                    <div class="product-rating">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <a href="#reviews" class="review-link">24 Reviews</a>
+                    </div>
+                    <p class="product-price">₦price</p>
+                </div>
+                
+                <div class="product-description">
+                    <p>Hand-stitched leather upper with Italian detailing. The (product name) represents our commitment to blending traditional craftsmanship with contemporary design.</p>
+                </div>
+                
+                <form>
+                    <!-- Color Selection -->
+                    <div class="option-group">
+                        <h3 class="option-title">Color</h3>
+                        <div class="color-options">
+                            <label class="color-option">
+                                <input type="radio" name="color" value="brown" class="color-radio">
+                                <div class="color-swatch" style="background: #8B4513;"></div>
+                            </label>
+                            <label class="color-option">
+                                <input type="radio" name="color" value="black" checked class="color-radio">
+                                <div class="color-swatch" style="background: #000;"></div>
+                            </label>
+                            <label class="color-option">
+                                <input type="radio" name="color" value="tan" class="color-radio">
+                                <div class="color-swatch" style="background: #D2B48C;"></div>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Size Selection -->
+                    <div class="option-group">
+                        <h3 class="option-title">Size</h3>
+                        <div class="size-options">
+                            <label class="size-option">
+                                <input type="radio" name="size" value="7" class="size-radio">
+                                <div class="size-box">7</div>
+                            </label>
+                            <label class="size-option">
+                                <input type="radio" name="size" value="8" class="size-radio">
+                                <div class="size-box">8</div>
+                            </label>
+                            <label class="size-option">
+                                <input type="radio" name="size" value="9" checked class="size-radio">
+                                <div class="size-box">9</div>
+                            </label>
+                            <label class="size-option">
+                                <input type="radio" name="size" value="10" class="size-radio">
+                                <div class="size-box">10</div>
+                            </label>
+                            <label class="size-option">
+                                <input type="radio" name="size" value="11" class="size-radio">
+                                <div class="size-box">11</div>
+                            </label>
+                            <label class="size-option">
+                                <input type="radio" name="size" value="12" class="size-radio">
+                                <div class="size-box">12</div>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Quantity -->
+                    <div class="option-group">
+                        <h3 class="option-title">Quantity</h3>
+                        <div class="quantity-selector">
+                            <button type="button" class="quantity-btn">-</button>
+                            <input type="number" value="1" min="1" class="quantity-input">
+                            <button type="button" class="quantity-btn">+</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Action Buttons -->
+                    <div class="action-buttons">
+                        <button type="button" onclick="addToCart()" class="action-btn cart-btn">Add to Cart</button>
+                        <button type="button" onclick="orderViaWhatsApp()" class="action-btn whatsapp-btn">Order via WhatsApp</button>
+                    </div>
+                </form>
+                
+                <div class="product-details">
+                    <h3 class="details-title">Product Details</h3>
+                    <ul class="details-list">
+                        <li class="detail-item">
+                            <span class="detail-label">Material:</span>
+                            <span>Full-grain leather</span>
+                        </li>
+                        <li class="detail-item">
+                            <span class="detail-label">Sole:</span>
+                            <span>Leather with rubber grip</span>
+                        </li>
+                        <li class="detail-item">
+                            <span class="detail-label">Lining:</span>
+                            <span>Soft calfskin</span>
+                        </li>
+                        <li class="detail-item">
+                            <span class="detail-label">Construction:</span>
+                            <span>Goodyear welted</span>
+                        </li>
+                        <li class="detail-item">
+                            <span class="detail-label">Made In:</span>
+                            <span>Nigeria</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Product Tabs -->
+        <div class="product-tabs">
+            <div class="tab-buttons">
+                <button class="tab-btn active" onclick="openTab(event, 'description')">Description</button>
+                <button class="tab-btn" onclick="openTab(event, 'details')">Details</button>
+                <button class="tab-btn" onclick="openTab(event, 'reviews')">Reviews</button>
+            </div>
+            
+            <div id="description" class="tab-content active">
+                <h3>Craftsmanship Meets Modern Design</h3>
+                <p>The (product name) is our tribute to classic shoemaking, reimagined for the modern gentleman. Every pair is handcrafted by our master artisans using techniques passed down through generations.</p>
+                <p>The full-grain leather upper develops a rich patina over time, while the Goodyear welt construction ensures durability and allows for resoling. The memory foam insole provides all-day comfort without sacrificing the sleek silhouette.</p>
+                <p>Available in three versatile colors, The (product name) transitions seamlessly from office to evening, pairing equally well with tailored suits or dark denim.</p>
+            </div>
+            
+            <div id="details" class="tab-content">
+                <h3>Technical Specifications</h3>
+                <ul class="details-list">
+                    <li class="detail-item">
+                        <span class="detail-label">Upper Material:</span>
+                        <span>Full-grain Italian leather</span>
+                    </li>
+                    <li class="detail-item">
+                        <span class="detail-label">Lining:</span>
+                        <span>Soft calfskin leather</span>
+                    </li>
+                    <li class="detail-item">
+                        <span class="detail-label">Insole:</span>
+                        <span>Leather with memory foam layer</span>
+                    </li>
+                    <li class="detail-item">
+                        <span class="detail-label">Outsole:</span>
+                        <span>Leather with rubber grip inserts</span>
+                    </li>
+                    <li class="detail-item">
+                        <span class="detail-label">Construction:</span>
+                        <span>Goodyear welted</span>
+                    </li>
+                    <li class="detail-item">
+                        <span class="detail-label">Weight:</span>
+                        <span>420g per shoe (size 9)</span>
+                    </li>
+                    <li class="detail-item">
+                        <span class="detail-label">Care Instructions:</span>
+                        <span>Use leather conditioner monthly, store with shoe trees</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <div id="reviews" class="tab-content">
+                <h3>Customer Reviews</h3>
+                <div class="review">
+                    <div class="review-header">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <strong class="review-author">Mustapha Haddau.</strong>
+                        <span class="review-date">June 12, 2025</span>
+                    </div>
+                    <h4 class="review-title">Perfect fit and exceptional quality</h4>
+                    <p>I've owned many dress shoes over the years, but none compare to the comfort and craftsmanship of The (product name). The leather is supple yet durable, and they required virtually no break-in period. Worth every penny.</p>
+                </div>
+                
+                <div class="review">
+                    <div class="review-header">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <strong class="review-author">Aisha Adamu</strong>
+                        <span class="review-date">September 28, 2023</span>
+                    </div>
+                    <h4 class="review-title">Beautiful shoes with minor sizing note</h4>
+                    <p>The craftsmanship is impeccable and the design is timeless. I normally wear a 10 but found these run slightly large - would recommend sizing down half a size if you're between sizes.</p>
+                </div>
+                
+                <button class="review-btn">Write a Review</button>
+            </div>
+        </div>
+        
+        <!-- Related Products -->
+        <div class="related-products">
+            <h2 class="related-title">You May Also Like</h2>
+            <div class="related-grid">
+                <!-- Product 1 -->
+                <div class="related-card animate-fade">
+                    <div class="related-image">
+                        <img src="./images/home.jpg" alt="Designer Shoe">
+                    </div>
+                    <div class="related-info">
+                        <h3>Blue shoe</h3>
+                        <p>Classic shoe with modern comfort technology</p>
+                        <div class="related-footer">
+                            <span class="related-price">₦20,000</span>
+                            <a href="product.html" class="related-link">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 2 -->
+                <div class="related-card animate-fade animate-delay-1">
+                    <div class="related-image">
+                        <img src="./images/sign1.jpg" alt="Designer Shoe">
+                        <div class="related-badge">Bestseller</div>
+                    </div>
+                    <div class="related-info">
+                        <h3>Brown couple</h3>
+                        <p>Sleek slippers with premium suede finish</p>
+                        <div class="related-footer">
+                            <span class="related-price">₦20,000</span>
+                            <a href="product.html" class="related-link">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 3 -->
+                <div class="related-card animate-fade animate-delay-2">
+                    <div class="related-image">
+                        <img src="./images/sign2.jpg" alt="Designer Shoe">
+                    </div>
+                    <div class="related-info">
+                        <h3>Blue slippers</h3>
+                        <p>Casual slip-on with memory foam insole</p>
+                        <div class="related-footer">
+                            <span class="related-price">₦25,000</span>
+                            <a href="product.html" class="related-link">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-logo">
+                <h3><span>SMB</span> Designs</h3>
+                <p>Luxury handcrafted footwear since (established date)</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-pinterest"></i></a>
+                </div>
+            </div>
+            <div>
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Customer Service</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Shipping Policy</a></li>
+                    <li><a href="#">Returns & Exchanges</a></li>
+                    <li><a href="#">Size Guide</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Contact</h4>
+                <div class="contact-info">
+                    <p><i class="fas fa-map-marker-alt"></i>No 1 Golf Course road opposite ear-care center, unguwan rimi, Kaduna.</p>
+                    <p><i class="fas fa-phone"></i> 07066648757</p>
+                    <p><i class="fas fa-envelope"></i> info@smbdesigns.com</p>
+                    <p><i class="fab fa-whatsapp"></i> +234 7066648757</p>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 SMB Designs. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle with animation
+        const menuBtn = document.querySelector('.mobile-menu-btn');
+        const menuIcon = document.getElementById('menu-icon');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navLinks = document.querySelectorAll('.mobile-menu-overlay a');
+        
+        let menuOpen = false;
+        
+        menuBtn.addEventListener('click', function() {
+            if(!menuOpen) {
+                mobileMenu.classList.add('active');
+                menuIcon.className = 'fas fa-times';
+                document.body.style.overflow = 'hidden';
+                menuOpen = true;
+                
+                // Animate each nav link
+                navLinks.forEach((link, index) => {
+                    link.style.animation = `fadeInUp 0.5s ease forwards ${index * 0.1 + 0.3}s`;
+                });
+            } else {
+                mobileMenu.classList.remove('active');
+                menuIcon.className = 'fas fa-bars';
+                document.body.style.overflow = 'auto';
+                menuOpen = false;
+                
+                // Reset animations
+                navLinks.forEach(link => {
+                    link.style.animation = 'none';
+                });
+            }
+        });
+        
+        // Close menu when clicking on a link
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                mobileMenu.classList.remove('active');
+                menuIcon.className = 'fas fa-bars';
+                document.body.style.overflow = 'auto';
+                menuOpen = false;
+            });
+        });
+        
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('main-header');
+            if (window.scrollY > 50) {
+                header.classList.add('header-scrolled');
+            } else {
+                header.classList.remove('header-scrolled');
+            }
+        });
+        
+        // Product tabs
+        function openTab(evt, tabName) {
+            // Hide all tab content
+            const tabContents = document.getElementsByClassName('tab-content');
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove('active');
+            }
+            
+            // Remove active class from all tab buttons
+            const tabButtons = document.getElementsByClassName('tab-btn');
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove('active');
+            }
+            
+            // Show the current tab and add active class to the button
+            document.getElementById(tabName).classList.add('active');
+            evt.currentTarget.classList.add('active');
+        }
+        
+        // WhatsApp order function
+        function orderViaWhatsApp() {
+            const productName = "The Milano";
+            const price = 245;
+            const color = document.querySelector('input[name="color"]:checked').value;
+            const size = document.querySelector('input[name="size"]:checked').value;
+            const quantity = document.querySelector('.quantity-input').value;
+            const total = price * quantity;
+            
+            const phone = "1234567890"; // Replace with actual WhatsApp number
+            const message = `Hi SMB Designs, I'd like to order:\n\n*${productName}*\nColor: ${color}\nSize: ${size}\nQuantity: ${quantity}\n\nTotal: $${total}\n\nPlease let me know about availability and payment options.`;
+            const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+            
+            window.open(url, '_blank');
+        }
+        
+        // Add to cart function
+        function addToCart() {
+            // Show success message
+            const addToCartBtn = document.querySelector('.cart-btn');
+            const originalText = addToCartBtn.textContent;
+            
+            addToCartBtn.textContent = 'Added to Cart!';
+            addToCartBtn.style.backgroundColor = '#4CAF50';
+            
+            // Reset after 2 seconds
+            setTimeout(() => {
+                addToCartBtn.textContent = originalText;
+                addToCartBtn.style.backgroundColor = '#000';
+            }, 2000);
+        }
+        
+        // Quantity selector
+        const minusBtn = document.querySelector('.quantity-btn:first-child');
+        const plusBtn = document.querySelector('.quantity-btn:last-child');
+        const quantityInput = document.querySelector('.quantity-input');
+        
+        minusBtn.addEventListener('click', function() {
+            let value = parseInt(quantityInput.value);
+            if (value > 1) {
+                quantityInput.value = value - 1;
+            }
+        });
+        
+        plusBtn.addEventListener('click', function() {
+            let value = parseInt(quantityInput.value);
+            quantityInput.value = value + 1;
+        });
+        
+        // Thumbnail image click
+        const thumbnails = document.querySelectorAll('.thumbnail');
+        const mainImage = document.querySelector('.main-image img');
+        
+        thumbnails.forEach(thumb => {
+            thumb.addEventListener('click', function() {
+                mainImage.src = this.src.replace('200', '800');
+            });
+        });
+        
+        // Scroll animation for elements
+        const animateOnScroll = () => {
+            const elements = document.querySelectorAll('.related-card, .product-images, .product-info');
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (elementPosition < windowHeight - 100) {
+                    element.classList.add('animate-fade');
+                }
+            });
+        };
+        
+        // Initial check on load
+        window.addEventListener('load', animateOnScroll);
+        
+        // Check on scroll
+        window.addEventListener('scroll', animateOnScroll);
+    </script>
+</body>
+</html>
